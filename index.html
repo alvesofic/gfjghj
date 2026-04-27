@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AlecrimLutas | Academia de Artes Marciais</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #faf9fe 0%, #f0eef8 100%);
+            color: #1a1a2e;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --verde-principal: #10b981;
+            --verde-escuro: #047857;
+            --verde-claro: #a7f3d0;
+            --roxo-principal: #8b5cf6;
+            --roxo-escuro: #6d28d9;
+            --roxo-claro: #c4b5fd;
+            --card-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(139, 92, 246, 0.08);
+            --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* Navbar simplificada */
+        .navbar {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, var(--verde-principal), var(--roxo-principal));
+            border-image-slice: 1;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--verde-principal), var(--roxo-principal));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .logo i {
+            background: none;
+            color: var(--roxo-principal);
+            margin-right: 8px;
+        }
+
+        .btn-nav {
+            background: linear-gradient(95deg, var(--verde-principal), var(--roxo-principal));
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            color: white !important;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.35);
+        }
+
+        /* Botão flutuante para voltar ao topo */
+        .go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(95deg, var(--verde-principal), var(--roxo-principal));
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+        }
+        .go-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .go-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Seções */
+        .section {
+            padding: 5rem 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        .section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+        }
+        .title-gradient {
+            background: linear-gradient(120deg, var(--verde-principal), var(--roxo-principal));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+        }
+        .hero-text {
+            flex: 1.2;
+        }
+        .hero-text .badge {
+            background: linear-gradient(135deg, var(--verde-claro), var(--roxo-claro));
+            color: var(--roxo-escuro);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+        }
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--verde-escuro), var(--roxo-escuro));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1.2rem;
+        }
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 2rem;
+            max-width: 550px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .stat-item h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--verde-escuro);
+        }
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .card-blob {
+            background: linear-gradient(145deg, #ffffff, #f5f3ff);
+            border-radius: 42% 58% 53% 47% / 45% 42% 58% 55%;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .card-blob img {
+            width: 100%;
+            max-width: 220px;
+            border-radius: 60px;
+        }
+
+        /* Grids */
+        .academies-grid, .plans-grid, .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Cards */
+        .academy-card, .plan-card, .instructor-card {
+            background: white;
+            border-radius: 1.8rem;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+        .academy-card:hover, .plan-card:hover, .instructor-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--verde-principal);
+            box-shadow: 0 25px 35px -12px rgba(16, 185, 129, 0.2);
+        }
+        .academy-img, .instructor-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--roxo-principal);
+        }
+        .academy-info, .instructor-info, .plan-info {
+            padding: 1.5rem;
+        }
+        .academy-info h3, .instructor-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--roxo-escuro);
+        }
+        .academy-location, .instructor-specialty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            margin: 0.7rem 0;
+            font-size: 0.9rem;
+        }
+        .academy-phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--verde-escuro);
+            font-weight: 600;
+            margin: 0.7rem 0;
+        }
+        .btn-academy, .btn-instructor {
+            background: transparent;
+            border: 1.5px solid var(--roxo-principal);
+            color: var(--roxo-principal);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+        .btn-academy:hover, .btn-instructor:hover {
+            background: linear-gradient(95deg, var(--verde-principal), var(--roxo-principal));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Planos */
+        .plan-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--verde-claro), var(--roxo-claro));
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            margin-bottom: 1rem;
+            color: var(--roxo-escuro);
+        }
+        .plan-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--verde-escuro);
+            margin: 0.8rem 0;
+        }
+        .plan-features {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        .plan-features li {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .plan-features i {
+            color: var(--verde-principal);
+        }
+        .btn-plan {
+            background: transparent;
+            border: 2px solid var(--roxo-principal);
+            color: var(--roxo-principal);
+            padding: 0.7rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-plan:hover {
+            background: linear-gradient(95deg, var(--verde-principal), var(--roxo-principal));
+            color: white;
+        }
+
+        /* Contato */
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+        .contact-info, .contact-form {
+            flex: 1;
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--verde-principal);
+        }
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            font-family: inherit;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--roxo-principal);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+        .btn-enviar {
+            background: var(--roxo-principal);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-enviar:hover {
+            background: var(--verde-principal);
+        }
+        .mensagem-feedback {
+            margin-top: 1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 780px) {
+            .hero-text h1 { font-size: 2rem; }
+            .section { padding: 3rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo"><i class="fas fa-fist-raised"></i> Alecrim<span>Lutas</span></div>
+        <a href="#" class="btn-nav"><i class="fas fa-user-plus"></i> Matricule-se</a>
+    </div>
+</nav>
+
+<main>
+    <!-- SEÇÃO INICIAL (HERO) -->
+    <div class="container" id="inicio">
+        <div class="hero" style="padding: 4rem 0 2rem;">
+            <div class="hero-text">
+                <div class="badge"><i class="fas fa-fist-raised"></i> Transformação diária</div>
+                <h1>Seja o melhor de você mesmo, aqui</h1>
+                <p>Treine com os maiores mestres, desenvolva disciplina, força e espírito de campeão. Do iniciante ao avançado, sua jornada começa agora na AlecrimLutas.</p>
+                <div class="hero-stats">
+                    <div class="stat-item"><h3>+450</h3><span>Alunos ativos</span></div>
+                    <div class="stat-item"><h3>12</h3><span>Modalidades</span></div>
+                    <div class="stat-item"><h3>98%</h3><span>Recomendação</span></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="card-blob">
+                    <img src="https://placehold.co/400x300/8b5cf6/ffffff?text=Alecrim+Lutas" alt="AlecrimLutas">
+                    <p style="margin-top: 12px;"><i class="fas fa-trophy" style="color: #10b981;"></i> Campeões nascem aqui</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO ACADEMIAS -->
+    <div class="section" id="academias">
+        <div class="container">
+            <h2 class="section-title">🏛️ <span class="title-gradient">Nossas Unidades</span></h2>
+            <div class="academies-grid" id="academiesGrid"></div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO PLANOS -->
+    <div class="section" id="planos">
+        <div class="container">
+            <h2 class="section-title">⚡ <span class="title-gradient">Escolha seu caminho</span></h2>
+            <div class="plans-grid" id="plansGrid"></div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO INSTRUTORES -->
+    <div class="section" id="instrutores">
+        <div class="container">
+            <h2 class="section-title">🥋 <span class="title-gradient">Nossos Mestres</span></h2>
+            <div class="instructors-grid" id="instructorsGrid"></div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO CONTATO -->
+    <div class="section" id="contato">
+        <div class="container">
+            <h2 class="section-title">📞 <span class="title-gradient">Fale Conosco</span></h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2><i class="fas fa-map-marker-alt" style="color: var(--verde-principal);"></i> Central</h2>
+                    <div class="info-item"><i class="fas fa-phone-alt"></i> <span>(11) 98765-4321</span></div>
+                    <div class="info-item"><i class="fas fa-envelope"></i> <span>contato@alecrimlutas.com.br</span></div>
+                    <div class="info-item"><i class="fab fa-whatsapp"></i> <span>WhatsApp: (11) 91234-5678</span></div>
+                    <img src="https://placehold.co/300x150/10b981/ffffff?text=Alecrim+Lutas" style="width:100%; border-radius: 1rem; margin-top: 1rem;" alt="contato">
+                </div>
+                <div class="contact-form">
+                    <h3><i class="fas fa-paper-plane" style="color: var(--roxo-principal);"></i> Envie sua mensagem</h3>
+                    <div class="input-group"><input type="text" id="contatoNome" placeholder="Seu nome"></div>
+                    <div class="input-group"><input type="email" id="contatoEmail" placeholder="Seu e-mail"></div>
+                    <div class="input-group"><textarea rows="3" id="contatoMsg" placeholder="Qual unidade ou plano te interessou?"></textarea></div>
+                    <button id="enviarContatoBtn" class="btn-enviar">Enviar mensagem</button>
+                    <div id="feedbackContato" class="mensagem-feedback"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p><i class="fas fa-fist-raised" style="color: #10b981;"></i> AlecrimLutas © 2025 • Seja o melhor de você mesmo, aqui • <i class="fas fa-leaf" style="color:#8b5cf6"></i> Disciplina, Respeito, Evolução</p>
+</footer>
+
+<div class="go-top" id="goTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    (function() {
+        // ==================== ACADEMIAS ====================
+        const academias = [
+            { nome: "AlecrimLutas - Alvorada", cidade: "Alvorada, PR", endereco: "Rua das Acácias, 450 - Centro", bairro: "Centro", telefone: "(44) 3123-1001", imagem: "https://placehold.co/600x400/10b981/ffffff?text=Alvorada+PR" },
+            { nome: "AlecrimLutas - São Paulo", cidade: "São Paulo, SP", endereco: "Av. Paulista, 1234 - Bela Vista", bairro: "Bela Vista", telefone: "(11) 3124-5678", imagem: "https://placehold.co/600x400/8b5cf6/ffffff?text=São+Paulo+SP" },
+            { nome: "AlecrimLutas - Manaus", cidade: "Manaus, AM", endereco: "Rua Rio Negro, 789 - Adrianópolis", bairro: "Adrianópolis", telefone: "(92) 3322-4455", imagem: "https://placehold.co/600x400/10b981/ffffff?text=Manaus+AM" },
+            { nome: "AlecrimLutas - Cuiabá", cidade: "Cuiabá, MT", endereco: "Av. Miguel Sutil, 2500 - Jardim Itália", bairro: "Jardim Itália", telefone: "(65) 3644-7788", imagem: "https://placehold.co/600x400/8b5cf6/ffffff?text=Cuiabá+MT" }
+        ];
+
+        const academiesGrid = document.getElementById('academiesGrid');
+        if(academiesGrid) {
+            academias.forEach(academy => {
+                const card = document.createElement('div');
+                card.className = 'academy-card';
+                card.innerHTML = `
+                    <img class="academy-img" src="${academy.imagem}" alt="${academy.nome}">
+                    <div class="academy-info">
+                        <h3><i class="fas fa-location-dot"></i> ${academy.nome}</h3>
+                        <div class="academy-location"><i class="fas fa-map-pin"></i> ${academy.cidade}</div>
+                        <div class="academy-location"><i class="fas fa-road"></i> ${academy.endereco}</div>
+                        <div class="academy-location"><i class="fas fa-building"></i> Bairro: ${academy.bairro}</div>
+                        <div class="academy-phone"><i class="fas fa-phone-alt"></i> ${academy.telefone}</div>
+                        <button class="btn-academy" data-telefone="${academy.telefone}" data-nome="${academy.nome}"><i class="fab fa-whatsapp"></i> Falar com a unidade</button>
+                    </div>
+                `;
+                academiesGrid.appendChild(card);
+            });
+            document.querySelectorAll('.btn-academy').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const telefone = btn.getAttribute('data-telefone');
+                    const nome = btn.getAttribute('data-nome');
+                    alert(`📞 Contato da ${nome}: ${telefone}\nNosso WhatsApp está disponível!`);
+                });
+            });
+        }
+
+        // ==================== PLANOS ====================
+        const planos = [
+            { nome: "Muay Thai", preco: "R$ 1.100", periodo: "/ano", icone: "fa-fist-raised", features: ["3x por semana", "Treino técnico + sparring", "Equipamento básico"] },
+            { nome: "Jiu-Jitsu", preco: "R$ 1.150", periodo: "/ano", icone: "fa-hand-holding-heart", features: ["4x por semana", "Graduação e sistema de faixas", "Kimono personalizado"] },
+            { nome: "Defesa Pessoal", preco: "R$ 1.350", periodo: "/ano", icone: "fa-shield-alt", features: ["Técnicas de autodefesa", "Simulações reais", "Certificado anual"] }
+        ];
+        const plansGrid = document.getElementById('plansGrid');
+        if(plansGrid) {
+            planos.forEach(plano => {
+                const card = document.createElement('div');
+                card.className = 'plan-card';
+                let featuresHtml = '';
+                plano.features.forEach(f => { featuresHtml += `<li><i class="fas fa-check-circle"></i> ${f}</li>`; });
+                card.innerHTML = `
+                    <div class="plan-info">
+                        <div class="plan-icon"><i class="fas ${plano.icone}"></i></div>
+                        <h3>${plano.nome}</h3>
+                        <div class="plan-price">${plano.preco}<small>${plano.periodo}</small></div>
+                        <ul class="plan-features">${featuresHtml}</ul>
+                        <button class="btn-plan" data-plano="${plano.nome}">Quero este plano</button>
+                    </div>
+                `;
+                plansGrid.appendChild(card);
+            });
+            document.querySelectorAll('.btn-plan').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const plano = btn.getAttribute('data-plano');
+                    document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+                    const msgBox = document.getElementById('contatoMsg');
+                    if(msgBox) msgBox.value = `Olá! Tenho interesse no plano anual de ${plano} da AlecrimLutas. Quero saber mais.`;
+                    const nomeInput = document.getElementById('contatoNome');
+                    if(nomeInput) nomeInput.focus();
+                    const flash = document.createElement('div');
+                    flash.innerText = `📋 Plano ${plano} selecionado! Preencha seus dados.`;
+                    flash.style.position = 'fixed';
+                    flash.style.bottom = '80px';
+                    flash.style.left = '50%';
+                    flash.style.transform = 'translateX(-50%)';
+                    flash.style.backgroundColor = '#10b981';
+                    flash.style.color = 'white';
+                    flash.style.padding = '12px 24px';
+                    flash.style.borderRadius = '50px';
+                    flash.style.zIndex = '999';
+                    flash.style.fontWeight = 'bold';
+                    document.body.appendChild(flash);
+                    setTimeout(() => flash.remove(), 3000);
+                });
+            });
+        }
+
+        // ==================== INSTRUTORES ====================
+        const instrutores = [
+            { nome: "Nikolas Yuri Alecrim", especialidade: "Faixa preta Jiu-Jitsu | Kruang preto, branco e vermelho - Muay Thai", bio: "13 anos de experiência, campeão estadual e referência na arte suave.", imagem: "https://placehold.co/600x400/8b5cf6/ffffff?text=Nikolas+Alecrim" },
+            { nome: "Fernanda Oliveira", especialidade: "Faixa marrom Jiu-Jitsu | Instrutora de Defesa Pessoal", bio: "Especialista em defesa pessoal feminina e autoconfiança.", imagem: "https://placehold.co/600x400/10b981/ffffff?text=Fernanda+Oliveira" },
+            { nome: "Carlos Mendes", especialidade: "Faixa preta Muay Thai | Kruang Azul", bio: "Mais de 50 lutas profissionais, técnico da seleção estadual.", imagem: "https://placehold.co/600x400/8b5cf6/ffffff?text=Carlos+Mendes" },
+            { nome: "Rodrigo Sampaio", especialidade: "Faixa preta Jiu-Jitsu | 3° grau", bio: "Mestre em estratégia de luta e condicionamento físico.", imagem: "https://placehold.co/600x400/10b981/ffffff?text=Rodrigo+Sampaio" }
+        ];
+        const instructorsGrid = document.getElementById('instructorsGrid');
+        if(instructorsGrid) {
+            instrutores.forEach(instr => {
+                const card = document.createElement('div');
+                card.className = 'instructor-card';
+                card.innerHTML = `
+                    <img class="instructor-img" src="${instr.imagem}" alt="${instr.nome}">
+                    <div class="instructor-info">
+                        <h3><i class="fas fa-user-ninja"></i> ${instr.nome}</h3>
+                        <div class="instructor-specialty"><i class="fas fa-medal"></i> ${instr.especialidade}</div>
+                        <div class="instructor-specialty"><i class="fas fa-quote-left"></i> ${instr.bio}</div>
+                        <button class="btn-instructor" data-nome="${instr.nome}"><i class="fas fa-calendar-alt"></i> Agendar aula experimental</button>
+                    </div>
+                `;
+                instructorsGrid.appendChild(card);
+            });
+            document.querySelectorAll('.btn-instructor').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const nomeInstrutor = btn.getAttribute('data-nome');
+                    document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+                    const msgBox = document.getElementById('contatoMsg');
+                    if(msgBox) msgBox.value = `Olá! Gostaria de agendar uma aula experimental com o instrutor ${nomeInstrutor}.`;
+                    const nomeInput = document.getElementById('contatoNome');
+                    if(nomeInput) nomeInput.focus();
+                    alert(`✨ Ótima escolha! O instrutor ${nomeInstrutor} aguarda seu contato. Preencha o formulário para agendarmos.`);
+                });
+            });
+        }
+
+        // ==================== FORM CONTATO ====================
+        const enviarContato = document.getElementById('enviarContatoBtn');
+        const feedbackContato = document.getElementById('feedbackContato');
+        if(enviarContato) {
+            enviarContato.addEventListener('click', () => {
+                const nome = document.getElementById('contatoNome')?.value.trim();
+                const email = document.getElementById('contatoEmail')?.value.trim();
+                const mensagem = document.getElementById('contatoMsg')?.value.trim();
+                if(!nome || !email || !mensagem) {
+                    feedbackContato.innerHTML = '<span style="color:#e11d48;">❌ Preencha todos os campos.</span>';
+                    return;
+                }
+                if(!email.includes('@') || !email.includes('.')) {
+                    feedbackContato.innerHTML = '<span style="color:#e11d48;">⚠️ E-mail inválido.</span>';
+                    return;
+                }
+                feedbackContato.innerHTML = '<span style="color:#10b981;">✅ Mensagem enviada! Nossa equipe AlecrimLutas retornará em breve. 🥋</span>';
+                document.getElementById('contatoNome').value = '';
+                document.getElementById('contatoEmail').value = '';
+                document.getElementById('contatoMsg').value = '';
+                setTimeout(() => feedbackContato.innerHTML = '', 4500);
+            });
+        }
+
+        // ==================== GO TOP BUTTON ====================
+        const goTopBtn = document.getElementById('goTopBtn');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 300) goTopBtn.classList.add('show');
+            else goTopBtn.classList.remove('show');
+        });
+        goTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+</script>
+</body>
+</html>
